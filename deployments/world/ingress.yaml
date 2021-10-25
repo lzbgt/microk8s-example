@@ -1,0 +1,49 @@
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: world
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: PathPrefix("/admin")
+      kind: Rule
+      services:
+        - name: world
+          port: 80
+      middlewares:
+        - name: world-stripprefix
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: world-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /world
+
+# https://doc.traefik.io/traefik/migration/v1-to-v2/#strip-and-rewrite-path-prefixes
+# https://doc.traefik.io/traefik/providers/kubernetes-ingress/
+# https://doc.traefik.io/traefik/routing/providers/kubernetes-ingress/
+# https://doc.traefik.io/traefik/providers/kubernetes-crd/
+# https://doc.traefik.io/traefik/user-guides/crd-acme/
+
+# ingressClassName: traefik-lb
+# - match: Host("example.org") && PathPrefix("/admin") && HostRegexp("{any:.+}") 
+
+# - --providers.kubernetescrd
+# - --providers.kubernetesingress=true
+# - --providers.kubernetesingress.ingressendpoint.ip=127.0.0.1
+# - --log=true
+# - --entrypoints.web.address=:80
+# - --log.level=INFO
+# - --accesslog=true
+# - --accesslog.filepath=/dev/stdout
+# - --accesslog.format=json
+# - --api
+# - --api.dashboard
+# - --providers.kubernetesingress.namespaces=default,dev,test,production

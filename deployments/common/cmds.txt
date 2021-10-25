@@ -1,0 +1,1 @@
+ktl -n traefik create clusterrolebinding sa-rb --clusterrole=cluster-admin --serviceaccount=traefik:traefik-ingress-controller
