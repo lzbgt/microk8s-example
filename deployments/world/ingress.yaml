@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: PathPrefix("/admin")
+    - match: PathPrefix("/world")
       kind: Rule
       services:
         - name: world

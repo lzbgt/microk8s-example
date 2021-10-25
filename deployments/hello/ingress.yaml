@@ -9,7 +9,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: PathPrefix("/admin")
+    - match: PathPrefix("/hello")
       kind: Rule
       services:
         - name: hello
